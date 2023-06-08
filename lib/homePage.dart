@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:login_page/objects/customButton.dart';
+import 'package:login_page/objects/intoructionTemplate.dart';
 import 'package:login_page/themes.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +15,14 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    PageController? pageController = PageController();
+
+    final pagesText = ["Изучайте любой язык в свободное время c помощью нашего приложения!",
+    "Еще какой-то текст!",
+    "И еще какой-то текст!"
+    ];
+
+    int currentPage = 0;
     
     return Scaffold(
       backgroundColor: colorWhite, //0xFFe5e2ddx
@@ -51,17 +61,19 @@ class _HomePageState extends State<HomePage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 85,
-                    height: 7,
-                    decoration: BoxDecoration(
-                      color: colorDirtBlue,
-                      borderRadius: BorderRadius.circular(5)
-                    ),
+                    //width: 85,
+                    //height: 7,
+                    //decoration: BoxDecoration(
+                    //  color: colorDirtBlue,
+                    //  borderRadius: BorderRadius.circular(5)
+                    //),
+                    child:
+                      SmoothPageIndicator(controller: pageController, count: 3),
                   ),
                   SizedBox(
                     width: 300,
                     child: Text(
-                      "Изучайте любой язык в свободное время c помощью нашего приложения!",
+                      pagesText[currentPage],
                       style: subTitleStyle,
                       textAlign: TextAlign.center,
                     ),
@@ -87,7 +99,10 @@ class _HomePageState extends State<HomePage> {
                         width: 150, 
                         height: 50, 
                         cornersRadius: 15, 
-                        onTap: () {}
+                        onTap: () {
+                          pageController.nextPage(duration: const Duration(microseconds: 500), curve: Curves.easeIn);
+                          print("next");
+                        }
                       ),
                     ],
                   )
